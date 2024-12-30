@@ -151,7 +151,7 @@ void expose_propagation(py::module &m)
           py::overload_cast<
           const tss::SystemOfBodies&,
           const std::shared_ptr< tp::SingleArcPropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE > >,
-          const double,
+          std::map< std::string, double >,
           const std::vector< double >,
           const bool >( &tp::getZeroProperModeRotationalStateWithStruct< TIME_TYPE, STATE_SCALAR_TYPE > ),
           py::arg("bodies"),

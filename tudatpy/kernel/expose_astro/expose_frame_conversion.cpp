@@ -84,6 +84,13 @@ void expose_frame_conversion(py::module &m) {
           py::arg("rotation_matrix"),
           py::arg("transform_cartesian_state_to_frame"));
 
+      m.def("inertial_to_planetocentric_frame",
+      py::overload_cast<const double, const double, const double>(
+              &trf::getInertialToPlanetocentricFrameTransformationMatrix),
+              py::arg("declination_pole"),
+              py::arg("right_ascension_pole"),
+              py::arg("longitude_prime_meridian"));
+
 }
 
 } // namespace frame_conversion
