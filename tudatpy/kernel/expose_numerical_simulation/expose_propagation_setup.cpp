@@ -90,6 +90,14 @@ void expose_propagation_setup(py::module &m) {
           py::arg("selected_mass_rates_per_body"),
           py::arg("acceleration_models") = nullptr,
           get_docstring("create_mass_rate_models").c_str());
+
+      m.def("create_gravity_deformation_models",
+          py::overload_cast<const tss::SystemOfBodies&,
+                  const tss::SelectedGravityDeformationModelMap &>(
+                  &tss::createGravityDeformationModelsMap),
+          py::arg("body_system"),
+          py::arg("selected_deformation_per_body"),
+          get_docstring("create_gravity_deformation_models").c_str());
 }
 }// namespace propagation_setup
 }// namespace numerical_simulation

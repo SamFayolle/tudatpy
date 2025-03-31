@@ -819,6 +819,12 @@ void expose_environment(py::module &m) {
 
 
 
+     py::class_<tss::RigidBodyProperties, std::shared_ptr<tss::RigidBodyProperties>>(
+          m, "RigidBodyProperties", get_docstring("RigidBodyProperties").c_str())
+            .def("update_inertia_tensor_derivative", &tss::RigidBodyProperties::updateInertiaTensorDerivative,
+                 py::arg("derivative_degree_two_coefficients"),
+                 get_docstring("RigidBodyProperties.update_inertia_tensor_derivative").c_str());
+
     /*!
      **************   BODY OBJECTS AND ASSOCIATED FUNCTIONALITY  ******************
      */
@@ -854,7 +860,20 @@ void expose_environment(py::module &m) {
             .def_property("rigid_body_properties", &tss::Body::getMassProperties, &tss::Body::setMassProperties, get_docstring("Body.rigid_body_properties").c_str())
             .def_property_readonly("gravitational_parameter", &tss::Body::getGravitationalParameter, get_docstring("Body.gravitational_parameter").c_str())
             .def("get_ground_station", &tss::Body::getGroundStation, py::arg("station_name"), get_docstring("Body.get_ground_station").c_str())
-            .def_property_readonly("ground_station_list", &tss::Body::getGroundStationMap, get_docstring("Body.ground_station_list").c_str() );
+            .def_property_readonly("ground_station_list", &tss::Body::getGroundStationMap, get_docstring("Body.ground_station_list").c_str() )
+            .def("set_angular_velocity_derivative_in_local_frame", 
+               &tss::Body::setCurrentAngularVelocityDerivativeVectorInLocalFrame, py::arg( "angular_velocity_derivative" ),
+                get_docstring("Body.set_angular_velocity_derivative_in_local_frame").c_str() )
+            .def("set_rotation_to_local_frame_from_ephemeris", 
+               &tss::Body::setCurrentRotationToLocalFrameFromEphemeris, py::arg( "time" ),
+                get_docstring("Body.set_rotation_to_local_frame_from_ephemeris").c_str() )
+            .def("set_rotational_state_to_local_frame_from_ephemeris",
+               &tss::Body::setCurrentRotationalStateToLocalFrameFromEphemeris< TIME_TYPE >, py::arg( "time" ),
+               get_docstring("Body.set_rotational_state_to_local_frame_from_ephemeris").c_str() )
+            .def("set_static_degree_two_coefficients",
+               &tss::Body::setStaticDegreeTwoCoefficients, 
+               py::arg( "degree_two_coefficients" ),
+               get_docstring("Body.set_static_degree_two_coefficients").c_str() );
 
 
     py::class_<tss::SystemOfBodies,

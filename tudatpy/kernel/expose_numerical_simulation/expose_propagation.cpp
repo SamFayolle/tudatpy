@@ -174,6 +174,10 @@ void expose_propagation(py::module &m)
             tba::MassRateModel,
             std::shared_ptr<tba::MassRateModel>>(m, "MassRateModel");
 
+    py::class_<
+            tba::GravityDeformationModel,
+            std::shared_ptr< tba::GravityDeformationModel > >( m, "GravityDeformationModel" );
+
 
 
     py::enum_<tp::PropagationTerminationReason>(m, "PropagationTerminationReason",
