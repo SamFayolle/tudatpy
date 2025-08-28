@@ -220,7 +220,7 @@ void expose_propagation( py::module &m )
                    const tss::SystemOfBodies &,
                    const std::shared_ptr<
                            tp::SingleArcPropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE > >,
-                   const double,
+                   std::map< std::string, double >,
                    const std::vector< double >,
                    const bool >(
                    &tp::getZeroProperModeRotationalStateWithStruct< TIME_TYPE,
@@ -325,6 +325,10 @@ void expose_propagation( py::module &m )
             m, "AccelerationModel" );
 
     py::class_< tba::MassRateModel, std::shared_ptr< tba::MassRateModel > >( m, "MassRateModel" );
+
+    py::class_<
+            tba::GravityDeformationModel,
+            std::shared_ptr< tba::GravityDeformationModel > >( m, "GravityDeformationModel" );
 
     py::enum_< tp::PropagationTerminationReason >( m,
                                                    "PropagationTerminationReason",

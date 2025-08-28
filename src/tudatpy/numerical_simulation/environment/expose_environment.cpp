@@ -921,7 +921,10 @@ inside a `Body` instance and used in observation corrections or environmental qu
 
         Inertia tensor of the object (with axes along those of the body-fixed frame), as set by the latest call to the ``update`` function of this object.
 
-      )doc" );
+      )doc" )
+      .def("update_inertia_tensor_derivative", &tss::RigidBodyProperties::updateInertiaTensorDerivative,
+                 py::arg("derivative_degree_two_coefficients"),
+                 R"doc("RigidBodyProperties.update_inertia_tensor_derivative")doc");
 
     py::class_< tsm::TimingSystem, std::shared_ptr< tsm::TimingSystem > >(
             m,
@@ -2734,7 +2737,21 @@ inside a `Body` instance and used in observation corrections or environmental qu
 
 
          :type: dict[str,GroundStation]
-      )doc" );
+      )doc" )
+            .def("set_angular_velocity_derivative_in_local_frame", 
+               &tss::Body::setCurrentAngularVelocityDerivativeVectorInLocalFrame, py::arg( "angular_velocity_derivative" ),
+                R"doc(Body.set_angular_velocity_derivative_in_local_frame)doc" )
+            .def("set_rotation_to_local_frame_from_ephemeris", 
+               &tss::Body::setCurrentRotationToLocalFrameFromEphemeris, py::arg( "time" ),
+                R"doc(Body.set_rotation_to_local_frame_from_ephemeris)doc" )
+            .def("set_rotational_state_to_local_frame_from_ephemeris",
+               &tss::Body::setCurrentRotationalStateToLocalFrameFromEphemeris< TIME_TYPE >, py::arg( "time" ),
+               R"doc(Body.set_rotational_state_to_local_frame_from_ephemeris)doc" )
+            .def("set_static_degree_two_coefficients",
+               &tss::Body::setStaticDegreeTwoCoefficients, 
+               py::arg( "degree_two_coefficients" ),
+               R"doc(Body.set_static_degree_two_coefficients)doc" );
+
 
     py::class_< tss::SystemOfBodies, std::shared_ptr< tss::SystemOfBodies > >(
             m, "SystemOfBodies", R"doc(

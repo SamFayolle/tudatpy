@@ -886,6 +886,12 @@ Enumeration of available integrated state types.
                 tp::SingleArcPropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE > >(
             m, "MassPropagatorSettings", R"doc(No propagator documentation found.)doc" );
 
+    py::class_<
+            tp::GravityDeformationPropagatorSettings<STATE_SCALAR_TYPE,TIME_TYPE>,
+            std::shared_ptr<tp::GravityDeformationPropagatorSettings<STATE_SCALAR_TYPE,TIME_TYPE>>,
+            tp::SingleArcPropagatorSettings<STATE_SCALAR_TYPE,TIME_TYPE>>(m, "GravityDeformationPropagatorSettings",
+                                                     R"doc(GravityDeformationPropagatorSettings)doc");
+
     py::class_< tp::CustomStatePropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE >,
                 std::shared_ptr< tp::CustomStatePropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE > >,
                 tp::SingleArcPropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE > >(
@@ -1262,6 +1268,22 @@ Returns
 SingleArcPropagatorSettings
     Custom propagator settings object.
      )doc" );
+
+     m.def("gravity_deformation",
+       &tp::gravityPropagatorSettings<STATE_SCALAR_TYPE,TIME_TYPE>,
+       //    py::overload_cast<
+       //    const std::vector<std::string> &,
+       //    const std::map< std::string, std::vector< std::shared_ptr< tba::GravityDeformationModel > > >&,
+       //    const Eigen::Matrix<STATE_SCALAR_TYPE, Eigen::Dynamic, 1> &,
+       //    const std::shared_ptr<tp::PropagationTerminationSettings>,
+       //    const std::vector<std::shared_ptr<tp::SingleDependentVariableSaveSettings> > &,
+       //    const double>(&tp::GravityDeformationPropagatorSettings<STATE_SCALAR_TYPE,TIME_TYPE>),
+          py::arg("bodies_to_integrate"),
+          py::arg("deformation_models"),
+          py::arg("initial_gravity"),
+          py::arg("integrator_settings"),
+          py::arg("termination_settings"),
+          py::arg("output_variables") = std::vector<std::shared_ptr<tp::SingleDependentVariableSaveSettings> >() );
 
     m.def( "multitype",
            py::overload_cast< const std::vector< std::shared_ptr< tp::SingleArcPropagatorSettings< STATE_SCALAR_TYPE, TIME_TYPE > > >,

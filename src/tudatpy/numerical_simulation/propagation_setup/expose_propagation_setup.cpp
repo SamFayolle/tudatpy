@@ -241,6 +241,16 @@ void expose_propagation_setup( py::module &m )
 
 
      )doc" );
+
+
+     m.def("create_gravity_deformation_models",
+          py::overload_cast<const tss::SystemOfBodies&,
+                  const tss::SelectedGravityDeformationModelMap &>(
+                  &tss::createGravityDeformationModelsMap),
+          py::arg("body_system"),
+          py::arg("selected_deformation_per_body"),
+          R"doc(create_gravity_deformation_models)doc");
+
 }
 }  // namespace propagation_setup
 }  // namespace numerical_simulation

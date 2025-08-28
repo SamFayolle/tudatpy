@@ -1428,6 +1428,20 @@ through the spherical harmonic gravity:
            py::arg( "thrust_frame" ) = tss::ThrustFrames::inertial_thrust_frame,
            py::arg( "central_body" ) = "",
            R"doc(No documentation found.)doc" );
+
+           py::class_<tss::GravityDeformationSettings,
+            std::shared_ptr<tss::GravityDeformationSettings>>(m, "GravityDeformationSettings",
+                                                        R"doc(GravityDeformationSettings)doc");
+
+      m.def("maxwell_deformation", &tss::maxwellDeformationSettings,
+          py::arg("maxwell_relaxation_time"),
+          py::arg("global_relaxation_time"),
+          py::arg("love_number"),
+          py::arg("maximum_degree"),
+          py::arg("maximum_order"), 
+          py::arg("perturbing_body"),
+          py::arg("static_coefficients") = Eigen::VectorXd::Zero( 3 ),
+          R"doc(maxwell_deformation)doc");
 }
 
 }  // namespace acceleration
