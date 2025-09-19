@@ -1441,6 +1441,7 @@ through the spherical harmonic gravity:
           py::arg("maximum_order"), 
           py::arg("perturbing_body"),
           py::arg("static_coefficients") = Eigen::VectorXd::Zero( 3 ),
+          py::arg("include_order_1") = true,
           R"doc(maxwell_deformation)doc");
 }
 
